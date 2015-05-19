@@ -11,20 +11,21 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   DOCKER_IMAGE_NAME = "ubuntu-vagrant"
   DOCKER_IMAGE_TAG = "14.04"
 
-  DOCKER_SYNC_FOLDER_HOST = "/home/dev/code"
-  DOCKER_SYNC_FOLDERL_GUEST = "/vagrant_data"
+  #DOCKER_SYNC_FOLDERL_GUEST = "/vagrant_data"
   DOCKER_CMD = ["/usr/sbin/sshd", "-D", "-e"]
 
   # UPDATE these project specific details.
-  PROJECT_NAME = "learn"
-  FORWARDED_APP_PORT = '3002'
+  #DOCKER_SYNC_FOLDER_HOST = "" # e.g. "/home/dev/code"
+  PROJECT_NAME = ""
+  FORWARDED_HOST_APP_PORT = ''
+  GUEST_APP_PORT = ''
 
   if Vagrant.has_plugin?("vagrant-cachier")
     config.cache.scope = :box
   end
 
   # Create symlinks to access graph files
-  config.vm.provision "shell", inline: "mkdir -p /var/lib/puppet/state/graphs && ln -sf /vagrant/build /var/lib/puppet/state/graphs"
+  # config.vm.provision "shell", inline: "mkdir -p /var/lib/puppet/state/graphs && ln -sf /vagrant/build /var/lib/puppet/state/graphs"
 
   # Boostrap docker containers with shell provisioner.
   config.vm.provision "bootstrap", type: "shell" do |s|
@@ -41,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.define "#{PROJECT_NAME}" do |d|
     d.vm.hostname = "#{PROJECT_NAME}.local"
-    d.vm.network "forwarded_port", guest: 3000, host: FORWARDED_APP_PORT
+    d.vm.network "forwarded_port", guest: GUEST_APP_PORT, host: FORWARDED_HOST_APP_PORT
 
     d.vm.provision "provision", type: "shell" do |s|
       s.path = "vagrant/provision.sh"
