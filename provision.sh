@@ -38,10 +38,19 @@ installMongo () {
 	mkdir -p /data/db
 }
 
+installHerokuToolbelt() {
+	wget -qO- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+}
+
+installGit() {
+	apt-get install -yq git
+}
+
 NODE_VERSION=$(trim ${1:-0.12.2})
 CONSUL_VERSION=$(trim ${2:-0.5.0})
 
 installNode
 installConsul
 installMongo
-apt-get install -yq git
+installHerokuToolbelt
+installGit
