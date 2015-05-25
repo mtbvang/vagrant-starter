@@ -52,6 +52,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.vm.provision "dotfiles", type: "shell" do |s|
       s.path = "vagrant/provision-dotfiles.sh"
     end
+    
+    d.vm.provision "post-provision", type: "shell" do |s|
+      s.path = "vagrant/post-provision.sh"
+      s.args = ""
+    end
 
     d.vm.provider "docker" do |d|
       d.cmd     = DOCKER_CMD
