@@ -51,7 +51,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "#{PROJECT_NAME}-app" do |d|
     d.vm.hostname = "#{PROJECT_NAME}.app.local"
     d.vm.network "forwarded_port", guest: GUEST_APP_PORT, host: FORWARDED_HOST_APP_PORT
-    d.vm.network "forwarded_port", guest: 35929, host: 35929
 
     d.vm.provision "dotfiles", type: "shell" do |s|
       s.path = "vagrant/provision-dotfiles.sh"
