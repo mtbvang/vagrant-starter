@@ -26,11 +26,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "~/.ssh/config", destination: ".ssh/config"
   config.vm.provision "file", source: "~/.ssh/id_rsa", destination: ".ssh/id_rsa"
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: ".ssh/id_rsa.pub"
-  config.vm.provision "file", source: "<devopsDir>/dotfiles/.bash_aliases", destination: ".bash_aliases"
-  config.vm.provision "file", source: "<devopsDir>/dotfiles/.bashrc", destination: ".bashrc"
+  config.vm.provision "file", source: "<dotfilesDir>/.bash_aliases", destination: ".bash_aliases"
+  config.vm.provision "file", source: "<dotfilesDir>/.bashrc", destination: ".bashrc"
 
   config.vm.provision "consul", type: "shell" do |s|
-    s.path = "<devopsDir>/vagrant/provisioning/shell/ubuntu/consul.sh"
+    s.path = "<vagrantDir>/provisioning/shell/ubuntu/consul.sh"
     s.args = "0.5.0 'devops/provisioning'"
   end
   
@@ -53,7 +53,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.vm.network "forwarded_port", guest: GUEST_APP_PORT, host: FORWARDED_HOST_APP_PORT
 
     d.vm.provision "main", type: "shell" do |s|
-      s.path = "<devopsDir>/provisioning/shell/node/provision.sh"
+      s.path = "<provisioningDir>/shell/node/provision.sh"
     end
     
     d.vm.provider "docker" do |d|
