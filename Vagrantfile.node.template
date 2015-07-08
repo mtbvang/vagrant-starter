@@ -57,7 +57,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
     
     d.vm.provider "docker" do |d|
-      d.image   = "#{DOCKER_IMAGE_REPO}/vagrant-node:wheezy"
+      d.image   = "#{DOCKER_IMAGE_REPO}/<dockerImage>"
       d.has_ssh = true
       d.privileged = true
       d.name = "#{PROJECT_NAME}-app"
