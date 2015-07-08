@@ -28,7 +28,7 @@ installConsul () {
 		apt-get install -yq psmisc
 		
 		# Install System V service scripts and start agent
-		cp /vagrant/vagrant/provision/ubuntu/consulagent /etc/init.d/	
+		cp /vagrant/${PROVISIONING_DIR}/shell/ubuntu/consulagent /etc/init.d/	
 		chmod 755 /etc/init.d/consulagent
 		update-rc.d consulagent defaults
 		service consulagent start	
@@ -42,6 +42,7 @@ joinConsul () {
 }
 
 CONSUL_VERSION=$(trim ${1:-0.5.0})
+PROVISIONING_DIR=$(trim ${2:-devops/provisioning})
 
 init
 installConsul
