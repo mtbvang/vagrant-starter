@@ -42,7 +42,7 @@ joinConsul () {
 }
 
 CONSUL_VERSION=$(trim ${1:-0.5.0})
-PROVISIONING_DIR=$(trim ${2:-devops/provisioning})
+PROVISIONING_DIR=$(trim ${2:-devops/vagrant/provisioning})
 
 init
 installConsul
