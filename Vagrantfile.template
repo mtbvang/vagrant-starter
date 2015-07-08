@@ -10,9 +10,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   DOCKER_IMAGE_REPO = "mtbvang"
 
   # UPDATE these project specific details.
-  PROJECT_NAME = "<replace>"
-  FORWARDED_PORT_OFFSET = <replace>
-  GUEST_APP_PORT = <replace>
+  PROJECT_NAME = "<projectName>"
+  FORWARDED_PORT_OFFSET = <portOffset>
+  GUEST_APP_PORT = <guestAppPort>
   FORWARDED_HOST_APP_PORT = GUEST_APP_PORT + FORWARDED_PORT_OFFSET
 
   GUEST_MONGO_PORT = 27017
