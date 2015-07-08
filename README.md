@@ -9,5 +9,6 @@ cp vagrant/Vagrantfile.template Vagrantfile
 ```
 Update the variables under "# UPDATE these project specific details." and vagrant up.
 
-  vagrant up
-
+```sh
+vagrant up
+```
