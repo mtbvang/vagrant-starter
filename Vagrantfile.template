@@ -25,11 +25,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "~/.gitconfig", destination: ".gitconfig"
   config.vm.provision "file", source: "~/.ssh/config", destination: ".ssh/config"
   #config.vm.provision "file", source: "~/.ssh/*", destination: ".ssh/"
-  config.vm.provision "file", source: "vagrant/provision/ubuntu/.bash_aliases", destination: ".bash_aliases"
-  config.vm.provision "file", source: "vagrant/provision/ubuntu/.bashrc", destination: ".bashrc"
+  config.vm.provision "file", source: "<vagrantStarterDir>/provision/ubuntu/.bash_aliases", destination: ".bash_aliases"
+  config.vm.provision "file", source: "<vagrantStarterDir>/provision/ubuntu/.bashrc", destination: ".bashrc"
 
   config.vm.provision "consul", type: "shell" do |s|
-    s.path = "vagrant/provision/ubuntu/consul.sh"
+    s.path = "<vagrantStarterDir>/provision/ubuntu/consul.sh"
     s.args = ""
   end
   
@@ -52,7 +52,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.vm.network "forwarded_port", guest: GUEST_APP_PORT, host: FORWARDED_HOST_APP_PORT
 
     d.vm.provision "dotfiles", type: "shell" do |s|
-      s.path = "vagrant/provision/ubuntu/dotfiles.sh"
+      s.path = "<vagrantStarterDir>/provision/ubuntu/dotfiles.sh"
     end
 
     d.vm.provider "docker" do |d|
