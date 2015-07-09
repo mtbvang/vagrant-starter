@@ -4,7 +4,7 @@
 
 init() {
 	apt-get update
-	apt-get install -yq wget unzip	
+apt-get install -yq wget unzip ca-certificates
 }
 
 trim() {
