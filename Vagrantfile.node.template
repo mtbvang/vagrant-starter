@@ -28,10 +28,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: ".ssh/id_rsa.pub"
   config.vm.provision "file", source: "<dotfilesDir>/.bash_aliases", destination: ".bash_aliases"
   config.vm.provision "file", source: "<dotfilesDir>/.bashrc", destination: ".bashrc"
+  config.vm.provision "file", source: "<dotfilesDir>/.profile", destination: ".profile"
 
   config.vm.provision "consul", type: "shell" do |s|
     s.path = "<vagrantDir>/provisioning/shell/ubuntu/consul.sh"
-    s.args = "0.5.0 'devops/vagrant/provisioning'"
+    s.args = "0.5.0 '<vagrantDir>/provisioning'"
   end
   
   config.vm.define "#{PROJECT_NAME}-mongo" do |d|
@@ -49,11 +50,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "#{PROJECT_NAME}-app" do |d|
+    d.ssh.username = "docker"
+    d.ssh.password = "docker"
+    d.ssh.insert_key = true
+    
     d.vm.hostname = "#{PROJECT_NAME}.app.local"
     d.vm.network "forwarded_port", guest: GUEST_APP_PORT, host: FORWARDED_HOST_APP_PORT
 
     d.vm.provision "main", type: "shell" do |s|
       s.path = "<provisioningDir>/shell/node/provision.sh"
+    end
+
+    d.vm.provision "r", type: "shell" do |s|
+      s.path = "<provisioningDir>/shell/R.sh"
     end
     
     d.vm.provider "docker" do |d|
@@ -63,6 +72,20 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       d.name = "#{PROJECT_NAME}-app"
       d.link "#{PROJECT_NAME}-mongo:#{PROJECT_NAME}-mongo"
     end
+  end
+
+  config.vm.define "#{PROJECT_NAME}-win", autostart: false do |d|
+    d.vm.hostname = "#{PROJECT_NAME}.app.local"
+
+    d.vm.box = "designerror/windows-7"
+
+    d.vm.provider "virtualbox" do |vb|
+      # Display the VirtualBox GUI when booting the machine
+      vb.gui = true
+      # Customize the amount of memory on the VM:
+      vb.memory = "1024"
+    end
+
   end
 
 end
