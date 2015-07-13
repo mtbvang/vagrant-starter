@@ -50,10 +50,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.define "#{PROJECT_NAME}-app" do |d|
-    d.ssh.username = "docker"
-    d.ssh.password = "docker"
-    d.ssh.insert_key = true
-    
     d.vm.hostname = "#{PROJECT_NAME}.app.local"
     d.vm.network "forwarded_port", guest: GUEST_APP_PORT, host: FORWARDED_HOST_APP_PORT
 
