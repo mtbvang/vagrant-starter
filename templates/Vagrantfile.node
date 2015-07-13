@@ -10,9 +10,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   DOCKER_IMAGE_REPO = "mtbvang"
 
   # UPDATE these project specific details.
-  PROJECT_NAME = "<projectName>"
-  FORWARDED_PORT_OFFSET = <portOffset>
-  GUEST_APP_PORT = <guestAppPort>
+  PROJECT_NAME = "<%= projectName %>"
+  FORWARDED_PORT_OFFSET = <%= portOffset %>
+  GUEST_APP_PORT = <%= guestAppPort %>
   FORWARDED_HOST_APP_PORT = GUEST_APP_PORT + FORWARDED_PORT_OFFSET
 
   GUEST_MONGO_PORT = 27017
@@ -26,9 +26,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "~/.ssh/config", destination: ".ssh/config"
   config.vm.provision "file", source: "~/.ssh/id_rsa", destination: ".ssh/id_rsa"
   config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: ".ssh/id_rsa.pub"
-  config.vm.provision "file", source: "<dotfilesDir>/.bash_aliases", destination: ".bash_aliases"
-  config.vm.provision "file", source: "<dotfilesDir>/.bashrc", destination: ".bashrc"
-  config.vm.provision "file", source: "<dotfilesDir>/.profile", destination: ".profile"
+  config.vm.provision "file", source: "<%= dotfilesDir %>/.bash_aliases", destination: ".bash_aliases"
+  config.vm.provision "file", source: "<%= dotfilesDir %>/.bashrc", destination: ".bashrc"
+  config.vm.provision "file", source: "<%= dotfilesDir %>/.profile", destination: ".profile"
 
   config.vm.provision "consul", type: "shell" do |s|
     s.path = "<vagrantDir>/provisioning/shell/ubuntu/consul.sh"
@@ -58,11 +58,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     d.vm.network "forwarded_port", guest: GUEST_APP_PORT, host: FORWARDED_HOST_APP_PORT
 
     d.vm.provision "main", type: "shell" do |s|
-      s.path = "<provisioningDir>/shell/node/provision.sh"
+      s.path = "<%= provisioningDir %>/shell/node/provision.sh"
     end
 
     d.vm.provision "r", type: "shell" do |s|
-      s.path = "<provisioningDir>/shell/R.sh"
+      s.path = "<%= provisioningDir %>/shell/R.sh"
     end
     
     d.vm.provider "docker" do |d|
