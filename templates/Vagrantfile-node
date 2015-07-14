@@ -29,6 +29,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "file", source: "<dotfilesDir>/.bash_aliases", destination: ".bash_aliases"
   config.vm.provision "file", source: "<dotfilesDir>/.bashrc", destination: ".bashrc"
   config.vm.provision "file", source: "<dotfilesDir>/.profile", destination: ".profile"
+  config.vm.provision "file", source: "~/.netrc", destination: ".netrc"
 
   config.vm.provision "consul", type: "shell" do |s|
     s.path = "<vagrantDir>/provisioning/shell/ubuntu/consul.sh"
