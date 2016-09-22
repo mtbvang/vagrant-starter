@@ -10,7 +10,11 @@ From the root of your project run:
 
 ```sh
 git submodule add https://github.com/mtbvang/vagrant-starter.git vagrant
-cp vagrant/Vagrantfile.template Vagrantfile
+```
+
+Copy the vagrant template file for the kind of project e.g.
+```sh
+cp vagrant/templates/Vagrantfile-node Vagrantfile
 ```
 Update the variables under "# UPDATE these project specific details." and vagrant up.
 
